@@ -25,7 +25,6 @@ export default function Details(props) {
     missedVotesPercent: props.missedVotesPercent,
     votesWithPartyPercent: props.votesWithPartyPercent,
     votesAgainstPartyPercent: props.votesAgainstPartyPercent,
-    imageURL: props.imageURL,
   };
 
   //states
@@ -33,38 +32,22 @@ export default function Details(props) {
   // 2. Replacement image in case there is an error with loading congress-person's portrait
 
   const [details, setDetails] = React.useState(profile);
-  const [defaultImage, setDefaultImage] = React.useState(
-    "congressprofiles/Noimgavailable.jpg"
-  );
-
-  function replaceImage(error) {
-    error.target.src = defaultImage;
-  }
 
   return (
-    <section>
-      <div className="personal-details">
-        <div className="personal-details__image">
-          <img
-            src={profile.imageURL}
-            alt="congress profile"
-            onError={replaceImage}
-          ></img>
+    <section className="list-item">
+      <div>
+        <div className="list-item__name">
+          <span>{details.name}</span>
         </div>
-        <div className="personal-details__name">
-          <span>
-            {details.name}, {props.id}
-          </span>
-        </div>
-        <div className="personal-details__state">
+        <div className="list-item__state">
           {" "}
           <span>{details.state}</span>{" "}
         </div>
-        <div className="personal-details_party">
+        <div className="list-item_party">
           <span>{details.party}</span>
         </div>
       </div>
-      <div className="personal-details__website">
+      <div className="list-item__website">
         <div>
           {details.websiteURL && (
             <a href={details.websiteURL} target="_blank" rel="noreferrer">
@@ -77,7 +60,7 @@ export default function Details(props) {
           )}
         </div>
       </div>
-      <div className="personal-details__contact">
+      <div className="list-item__contact">
         <div>
           {details.contactFormURL && (
             <a href={details.contactFormURL} target="_blank" rel="noreferrer">
@@ -101,7 +84,7 @@ export default function Details(props) {
           )}
         </div>
       </div>
-      <div className="personal-details__socials">
+      <div className="list-item__socials">
         <div className="socials__twitter">
           {details.twitterAccount && (
             <a href={details.twitterAccount} target="_blank" rel="noreferrer">
@@ -133,6 +116,9 @@ export default function Details(props) {
           )}
         </div>
       </div>
+      <div className="button__show-graphs">
+        <button>Show Details</button>
+      </div>
 
       {/* <Graphs
         id={details.id}
@@ -140,6 +126,7 @@ export default function Details(props) {
         missedVotesPercent={details.missedVotesPercent}
         votesWithPartyPercent={details.votesWithPartyPercent}
         votesAgainstPartyPercent={details.votesAgainstPartyPercent}
+        imageURL={`congressprofiles/${id}.jpg`}
       /> */}
     </section>
   );

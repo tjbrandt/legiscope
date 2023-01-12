@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { getMemberData } from "../modules/propublicaAPIcalls";
 // import Details from "./Details";
-const MemberDetails = React.lazy(() => import("./TableItem"));
+const TableItem = React.lazy(() => import("./TableItem"));
 
 //using a lazy render apprach to getting Details -> as of 01/10/23, I don't fully understand what's going on, but it seems to work. in case it doesn't work out later on, attempt to fix or revert to basic import approach
 
@@ -51,7 +51,7 @@ export default function List() {
 
       return (
         <Suspense>
-          <MemberDetails
+          <TableItem
             key={id}
             id={id}
             firstName={firstName}
@@ -69,7 +69,6 @@ export default function List() {
             missedVotesPercent={missedVotesPercent}
             votesWithPartyPercent={votesWithPartyPercent}
             votesAgainstPartyPercent={votesAgainstPartyPercent}
-            imageURL={`congressprofiles/${id}.jpg`}
           />
         </Suspense>
       );
@@ -82,7 +81,7 @@ export default function List() {
     getDetailsComponents(representativeList);
 
   return (
-    <div>
+    <div className="table">
       <section>{senatorDetailsComponents}</section>
       <h1>This is the list for representatives</h1>
       <section>{representativeDetailsComponents}</section>

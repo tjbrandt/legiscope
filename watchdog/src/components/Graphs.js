@@ -44,7 +44,7 @@ export default function Graphs(props) {
 
   const dwNominateData = {
     percent: dwNominatePercent,
-    display: determineDwNominateDisplay(dwNominatePercent),
+    alignment: determineDwNominateDisplay(dwNominatePercent),
   };
 
   const partyVotesData = {
@@ -74,25 +74,51 @@ export default function Graphs(props) {
     ],
     options: { animation: false },
   };
+
+  const [defaultImage, setDefaultImage] = React.useState(
+    "congressprofiles/Noimgavailable.jpg"
+  );
+
+  function replaceImage(error) {
+    error.target.src = defaultImage;
+  }
+
+  const initialGraphDisplay = {
+    imageURL: props.imageURL,
+    attendanceDataDisplay: attendanceData,
+    partyVotesDisplay: partyVotesData,
+    dwNominateDisplay: dwNominateData,
+  };
+
+  const [graphsDisplay, setGraphsDisplay] = React.useState(initialGraphDisplay);
+  //TODO prep function to show graphs after user clicks button in TableItem component
+
   //TODO for some reason, the GaugeChart loads in immediately, while the Doughnut's take a while; might be simply related to load times, need to look into this further
   return (
     <div>
+      <div className="list-item__image">
+        <img
+          src={graphsDisplay.imageURL}
+          alt="congress profile"
+          onError={replaceImage}
+        ></img>
+      </div>
       <div>
         This is where the VotesWith/VotesAgainst data should go:{" "}
-        <Doughnut data={partyVotesData} />{" "}
+        <Doughnut data={graphsDisplay.partyVotesDisplay} />{" "}
       </div>
       <div>
         This is where the Votes Attendance data should go:{" "}
-        <Doughnut data={attendanceData} />{" "}
+        <Doughnut data={graphsDisplay.attendanceDataDisplay} />{" "}
       </div>
       <div>
         This is where the dwNominateData should go:{" "}
         <GaugeChart
           id="dwNominate"
-          percent={dwNominateData.percent}
+          percent={graphsDisplay.dwNominateDisplay.percent}
           textColor="#000000"
         />
-        This person is {dwNominateData.display}
+        This person is {graphsDisplay.dwNominateDisplay.alignment}
       </div>
     </div>
   );
