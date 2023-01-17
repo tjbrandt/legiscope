@@ -15,8 +15,9 @@ export default function List(props) {
 
   function makeTable(chamberList) {
     const memberGroup = chamberList.map((profile) => {
-      let { id } = profile.id;
-      let { firstName, lastName, party, state } = profile.personalDetails;
+      let { firstName, lastName, party, state, title, id } =
+        profile.personalDetails;
+
       let {
         twitterAccount,
         facebookAccount,
@@ -27,6 +28,7 @@ export default function List(props) {
       } = profile.contactInfo;
 
       return {
+        id: id,
         name: `${firstName} ${lastName}`,
         party: party,
         state: state,
@@ -44,7 +46,14 @@ export default function List(props) {
             youtubeAccount={youtubeAccount}
           />
         ),
-        button: <GraphsButton id={id} />,
+        button: (
+          <GraphsButton
+            id={id}
+            changeGraphs={props.changeGraphs}
+            list={title === "Sen." ? senatorList : representativeList}
+            title={title}
+          />
+        ),
       };
     });
     const memberTable = (
@@ -57,6 +66,7 @@ export default function List(props) {
             <th>Contact</th>
             <th>Socials</th>
             <th>Temp:Button</th>
+            <th>Temp: ID</th>
           </tr>
         </thead>
         <tbody>
@@ -68,6 +78,7 @@ export default function List(props) {
               <td>{member.contact}</td>
               <td>{member.socials}</td>
               <td>{member.button}</td>
+              <tr>{member.id}</tr>
             </tr>
           ))}
         </tbody>

@@ -37,13 +37,13 @@ async function getMemberData(chamber) {
     } = result;
 
     const profile = {
-      id: id,
       personalDetails: {
         firstName: first_name,
         lastName: last_name,
         title: short_title,
         party: party,
         state: state,
+        id: id,
       },
 
       contactInfo: {

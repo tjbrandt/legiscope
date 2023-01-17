@@ -105,15 +105,19 @@ export default function Graphs(props) {
       </div>
       <div>
         This is where the VotesWith/VotesAgainst data should go:{" "}
-        <Doughnut data={graphsDisplay.partyVotesDisplay} />{" "}
+        <Doughnut className="graphs" data={graphsDisplay.partyVotesDisplay} />{" "}
       </div>
       <div>
         This is where the Votes Attendance data should go:{" "}
-        <Doughnut data={graphsDisplay.attendanceDataDisplay} />{" "}
+        <Doughnut
+          className="graphs"
+          data={graphsDisplay.attendanceDataDisplay}
+        />{" "}
       </div>
       <div>
         This is where the dwNominateData should go:{" "}
         <GaugeChart
+          className="graphs"
           id="dwNominate"
           percent={graphsDisplay.dwNominateDisplay.percent}
           textColor="#000000"
