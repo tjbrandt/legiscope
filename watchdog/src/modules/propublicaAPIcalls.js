@@ -37,8 +37,8 @@ async function getMemberData(chamber) {
     } = result;
 
     const profile = {
+      id: id,
       personalDetails: {
-        id: id,
         firstName: first_name,
         lastName: last_name,
         title: short_title,

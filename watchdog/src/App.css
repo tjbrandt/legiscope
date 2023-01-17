@@ -6,25 +6,6 @@
   margin: 0 50px 0 50px;
 }
 
-.list-item {
-  height: 100px;
-  border: 2px solid black;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.list-item > div {
-  background-color: aqua;
-  border: 1px dashed blue;
-  display: flex;
-}
-
-.list-item > div a {
-  display: flex;
-  align-items: center;
-}
-
-.list-item img {
-  height: 50px;
+img {
+  height: 20px;
 }

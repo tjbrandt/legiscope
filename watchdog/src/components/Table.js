@@ -1,39 +1,22 @@
 import React, { Suspense } from "react";
-import { getMemberData } from "../modules/propublicaAPIcalls";
+
+import ContactIcons from "./ContactIcons";
+import GraphsButton from "./GraphsButton";
+import Loading from "./Loading";
+import SocialIcons from "./SocialIcons";
 // import Details from "./Details";
 const TableItem = React.lazy(() => import("./TableItem"));
 
 //using a lazy render apprach to getting Details -> as of 01/10/23, I don't fully understand what's going on, but it seems to work. in case it doesn't work out later on, attempt to fix or revert to basic import approach
 
-export default function List() {
-  const [senatorList, setSenatorList] = React.useState([]);
-  const [representativeList, setRepresentativeList] = React.useState([]);
+export default function List(props) {
+  const senatorList = props.senatorList;
+  const representativeList = props.representativeList;
 
-  //API call to get congress person data from ProPublica
-
-  React.useEffect(
-    () =>
-      async function () {
-        // proPublicaAPI function from module performs call twice to gather information from both chambers
-        const senatorList = await getMemberData("senate");
-        const representativeList = await getMemberData("house");
-
-        setSenatorList(senatorList);
-        setRepresentativeList(representativeList);
-      },
-    []
-  );
-  // TODO holding on to below console logs - current issue where renders are triggering useEffect more than once, even though I'm following guidelines that I'm aware of, need to investigate further
-  //   const firstSenator = senatorList[0];
-  //   const firstHouse = houseList[0];
-  //   console.log(firstSenator);
-  //   console.log(firstHouse);
-  //   console.log(senatorList);
-
-  function getDetailsComponents(chamberList) {
+  function makeTable(chamberList) {
     const memberGroup = chamberList.map((profile) => {
-      let { id, firstName, lastName, title, party, state } =
-        profile.personalDetails;
+      let { id } = profile.id;
+      let { firstName, lastName, party, state } = profile.personalDetails;
       let {
         twitterAccount,
         facebookAccount,
@@ -42,49 +25,70 @@ export default function List() {
         contactFormURL,
         phoneNumber,
       } = profile.contactInfo;
-      let {
-        dwNominate,
-        missedVotesPercent,
-        votesWithPartyPercent,
-        votesAgainstPartyPercent,
-      } = profile.statistics;
 
-      return (
-        <Suspense>
-          <TableItem
-            key={id}
-            id={id}
-            firstName={firstName}
-            lastName={lastName}
-            title={title}
-            party={party}
-            state={state}
-            twitterAccount={twitterAccount}
-            facebookAccount={facebookAccount}
-            youtubeAccount={youtubeAccount}
+      return {
+        name: `${firstName} ${lastName}`,
+        party: party,
+        state: state,
+        contact: (
+          <ContactIcons
             websiteURL={websiteURL}
             contactFormURL={contactFormURL}
             phoneNumber={phoneNumber}
-            dwNominate={dwNominate}
-            missedVotesPercent={missedVotesPercent}
-            votesWithPartyPercent={votesWithPartyPercent}
-            votesAgainstPartyPercent={votesAgainstPartyPercent}
           />
-        </Suspense>
-      );
+        ),
+        socials: (
+          <SocialIcons
+            twitterAccount={twitterAccount}
+            facebookAccount={facebookAccount}
+            youtubeAccount={youtubeAccount}
+          />
+        ),
+        button: <GraphsButton id={id} />,
+      };
     });
-    return memberGroup;
+    const memberTable = (
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>State</th>
+            <th>Party</th>
+            <th>Contact</th>
+            <th>Socials</th>
+            <th>Temp:Button</th>
+          </tr>
+        </thead>
+        <tbody>
+          {memberGroup.map((member) => (
+            <tr>
+              <td>{member.name}</td>
+              <td>{member.party}</td>
+              <td>{member.state}</td>
+              <td>{member.contact}</td>
+              <td>{member.socials}</td>
+              <td>{member.button}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+    return memberTable;
   }
 
-  const senatorDetailsComponents = getDetailsComponents(senatorList);
-  const representativeDetailsComponents =
-    getDetailsComponents(representativeList);
+  const senatorDetailsTable = makeTable(senatorList);
+  const representativeDetailsTable = makeTable(representativeList);
 
   return (
-    <div className="table">
-      <section>{senatorDetailsComponents}</section>
-      <h1>This is the list for representatives</h1>
-      <section>{representativeDetailsComponents}</section>
-    </div>
+    <section>
+      <div className="table">
+        <h1>This is the list for senators</h1>
+        <Suspense fallback={<Loading />}>
+          <section>{senatorDetailsTable}</section>
+        </Suspense>
+        <h1>This is the list for representatives</h1>
+        <section>{representativeDetailsTable}</section>
+      </div>
+    </section>
   );
 }
