@@ -9,7 +9,7 @@ const TableItem = React.lazy(() => import("./TableItem"));
 
 //using a lazy render apprach to getting Details -> as of 01/10/23, I don't fully understand what's going on, but it seems to work. in case it doesn't work out later on, attempt to fix or revert to basic import approach
 
-export default function List(props) {
+export default function Table(props) {
   const senatorList = props.senatorList;
   const representativeList = props.representativeList;
 
@@ -78,7 +78,7 @@ export default function List(props) {
               <td>{member.contact}</td>
               <td>{member.socials}</td>
               <td>{member.button}</td>
-              <tr>{member.id}</tr>
+              <td>{member.id}</td>
             </tr>
           ))}
         </tbody>

@@ -2,7 +2,6 @@ import React from "react";
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import GaugeChart from "react-gauge-chart";
 
 // import { getPersonalReasons } from "../modules/propublicaAPIcalls"; <- unavailable as of 1/10/23, see related note on "propublicaAPIcalls.js"
 
@@ -42,10 +41,8 @@ export default function Graphs(props) {
     return dwNominateDisplay;
   }
 
-  const dwNominateData = {
-    percent: dwNominatePercent,
-    alignment: determineDwNominateDisplay(dwNominatePercent),
-  };
+  //TODO learn and adjust charts to have labels on the bottom and have the gauge chart show dDND result in "title" section rather than a label
+  //TODO add a label to the image of the member's name
 
   const partyVotesData = {
     labels: ["Votes With Party", "Votes Against Party"],
@@ -58,7 +55,6 @@ export default function Graphs(props) {
         borderWidth: 1,
       },
     ],
-    options: { animation: false },
   };
 
   const attendanceData = {
@@ -66,63 +62,65 @@ export default function Graphs(props) {
     datasets: [
       {
         label: "% of Votes",
-        data: [props.missedVotesPercent, 1 - props.missedVotesPercent],
+        data: [props.missedVotesPercent, 100 - props.missedVotesPercent],
         backgroundColor: ["rgba(255,255,0,.75)", "rgba(0,255,255,.75)"],
         borderColor: ["rgba(255,255,0,1)", "rgba(0,255,255,1)"],
         borderWidth: 1,
       },
     ],
-    options: { animation: false },
   };
 
-  const [defaultImage, setDefaultImage] = React.useState(
-    "congressprofiles/Noimgavailable.jpg"
-  );
+  const dwNominateData = {
+    labels: [determineDwNominateDisplay(dwNominatePercent)],
+    datasets: [
+      {
+        label: "% Leaning",
+        data: [dwNominatePercent, 1 - dwNominatePercent],
+        backgroundColor: ["rgba(255,255,0,.75)", "rgba(0,255,255,.75)"],
+        borderColor: ["rgba(255,255,0,1)", "rgba(0,255,255,1)"],
+        borderWidth: 1,
+        circumference: 180,
+        rotation: -90,
+      },
+    ],
+  };
 
-  function replaceImage(error) {
-    error.target.src = defaultImage;
-  }
-
-  const initialGraphDisplay = {
+  const graphsDisplay = {
     imageURL: props.imageURL,
     attendanceDataDisplay: attendanceData,
     partyVotesDisplay: partyVotesData,
     dwNominateDisplay: dwNominateData,
+    name: props.name,
   };
 
-  const [graphsDisplay, setGraphsDisplay] = React.useState(initialGraphDisplay);
   //TODO prep function to show graphs after user clicks button in TableItem component
 
   //TODO for some reason, the GaugeChart loads in immediately, while the Doughnut's take a while; might be simply related to load times, need to look into this further
   return (
-    <div>
-      <div className="list-item__image">
-        <img
-          src={graphsDisplay.imageURL}
-          alt="congress profile"
-          onError={replaceImage}
-        ></img>
+    <div className="graphs-container">
+      <div className="graphs">
+        <div className="image-container">
+          <img
+            src={graphsDisplay.imageURL}
+            alt="congress profile"
+            onError={props.replaceImage}
+          ></img>
+          <div className="name-container">
+            <span className="name">{graphsDisplay.name}</span>
+          </div>
+        </div>
       </div>
       <div>
-        This is where the VotesWith/VotesAgainst data should go:{" "}
         <Doughnut className="graphs" data={graphsDisplay.partyVotesDisplay} />{" "}
       </div>
       <div>
-        This is where the Votes Attendance data should go:{" "}
         <Doughnut
           className="graphs"
           data={graphsDisplay.attendanceDataDisplay}
         />{" "}
       </div>
       <div>
-        This is where the dwNominateData should go:{" "}
-        <GaugeChart
-          className="graphs"
-          id="dwNominate"
-          percent={graphsDisplay.dwNominateDisplay.percent}
-          textColor="#000000"
-        />
-        This person is {graphsDisplay.dwNominateDisplay.alignment}
+        <Doughnut className="graphs" data={graphsDisplay.dwNominateDisplay} />
       </div>
     </div>
   );

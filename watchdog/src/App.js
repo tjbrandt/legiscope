@@ -1,7 +1,7 @@
 import "./App.css";
 import Loading from "./components/Loading";
 // import Table from "./components/Table";
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { getMemberData } from "./modules/propublicaAPIcalls";
 import Graphs from "./components/Graphs";
 
@@ -16,24 +16,34 @@ function App() {
     votesWithPartyPercent: 49,
     votesAgainstPartyPercent: 51,
     missedVotesPercent: 5,
+    imageURL: "congressprofiles/default.jpg",
+    name: "",
   });
 
   const changeGraphs = (memberID) => {
     //TODO finish this function to update Graphs component based on which member's button was clicked, then pass to Table component to pass to Button within
-    //TODO having some troubles with various errors, probably related to API issues when I dealt with tables; try to figure it out
+    //TODO graphs update, but not sure if they do with correct numbers, look into this and fix if needed
 
     const foundItem = searchList.find(
       (profile) => profile.personalDetails.id === memberID
     );
     const { statistics } = foundItem;
-    setGraphsData({
+    const { personalDetails } = foundItem;
+    console.log("stats for", memberID, "are", statistics);
+    const newGraphData = {
       dwNominate: statistics.dwNominate,
       votesWithPartyPercent: statistics.votesWithPartyPercent,
       votesAgainstPartyPercent: statistics.votesAgainstPartyPercent,
       missedVotesPercent: statistics.missedVotesPercent,
-    });
+      imageURL: `congressprofiles/${memberID}.jpg`,
+      name: `${personalDetails.firstName} ${personalDetails.lastName}`,
+    };
+    setGraphsData((prevGraphs) => ({ ...prevGraphs, ...newGraphData }));
   };
-  // React.useEffect(changeGraphs, []);
+
+  function replaceImage(error) {
+    error.target.src = "congressprofiles/Noimgavailable.jpg";
+  }
 
   //API call to get congress person data from ProPublica
 
@@ -53,13 +63,8 @@ function App() {
 
   return (
     <div className="App">
-      <div className="graphs">
-        <Graphs
-          dwNominate={graphsData.dwNominate}
-          votesWithPartyPercent={graphsData.votesWithPartyPercent}
-          votesAgainstPartyPercent={graphsData.votesAgainstPartyPercent}
-          missedVotesPercent={graphsData.missedVotesPercent}
-        />
+      <div>
+        <Graphs {...graphsData} replaceImage={replaceImage} />
       </div>
       <Suspense fallback={<Loading />}>
         <Table

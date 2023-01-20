@@ -2,14 +2,26 @@
   text-align: center;
 }
 
-.table {
+.table,
+.graphs-container {
   margin: 0 50px 0 50px;
 }
 
-img {
+.table img {
   height: 20px;
 }
 
-.graphs {
+.graphs-container {
   height: 300px;
+  display: flex;
+  border: 2px solid blue;
+}
+
+.graphs,
+.graphs img {
+  height: 100%;
+}
+
+.image-container {
+  height: 100%;
 }
