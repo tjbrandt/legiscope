@@ -1,11 +1,9 @@
-import React, { Suspense } from "react";
+import React from "react";
 
 import ContactIcons from "./ContactIcons";
 import GraphsButton from "./GraphsButton";
-import Loading from "./Loading";
+// import Loading from "./Loading";
 import SocialIcons from "./SocialIcons";
-// import Details from "./Details";
-const TableItem = React.lazy(() => import("./TableItem"));
 
 //using a lazy render apprach to getting Details -> as of 01/10/23, I don't fully understand what's going on, but it seems to work. in case it doesn't work out later on, attempt to fix or revert to basic import approach
 
@@ -15,8 +13,7 @@ export default function Table(props) {
 
   function makeTable(chamberList) {
     const memberGroup = chamberList.map((profile) => {
-      let { firstName, lastName, party, state, title, id } =
-        profile.personalDetails;
+      let { firstName, lastName, party, state, id } = profile.personalDetails;
 
       let {
         twitterAccount,
@@ -46,14 +43,7 @@ export default function Table(props) {
             youtubeAccount={youtubeAccount}
           />
         ),
-        button: (
-          <GraphsButton
-            id={id}
-            changeGraphs={props.changeGraphs}
-            list={title === "Sen." ? senatorList : representativeList}
-            title={title}
-          />
-        ),
+        button: <GraphsButton id={id} changeGraphs={props.changeGraphs} />,
       };
     });
     const memberTable = (
@@ -73,8 +63,8 @@ export default function Table(props) {
           {memberGroup.map((member) => (
             <tr>
               <td>{member.name}</td>
-              <td>{member.party}</td>
               <td>{member.state}</td>
+              <td>{member.party}</td>
               <td>{member.contact}</td>
               <td>{member.socials}</td>
               <td>{member.button}</td>
@@ -89,16 +79,15 @@ export default function Table(props) {
 
   const senatorDetailsTable = makeTable(senatorList);
   const representativeDetailsTable = makeTable(representativeList);
+  const currentTable =
+    props.currentList === "senate"
+      ? senatorDetailsTable
+      : representativeDetailsTable;
 
   return (
     <section>
       <div className="table">
-        <h1>This is the list for senators</h1>
-        <Suspense fallback={<Loading />}>
-          <section>{senatorDetailsTable}</section>
-        </Suspense>
-        <h1>This is the list for representatives</h1>
-        <section>{representativeDetailsTable}</section>
+        <section>{currentTable}</section>
       </div>
     </section>
   );

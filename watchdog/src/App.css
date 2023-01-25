@@ -1,27 +1,57 @@
+/*TODO write in template color variables from Coolors, then modify CSS accordingly*/
+
+:root {
+  --red: rgb(232, 72, 85);
+  --blue: rgb(4, 139, 168);
+  --green: rgb(171, 209, 181);
+  --gray: rgb(212, 210, 213);
+}
+
 .App {
   text-align: center;
 }
 
 .table,
 .graphs-container {
-  margin: 0 50px 0 50px;
+  border: 3px solid green;
+  width: 100%;
 }
 
 .table img {
   height: 20px;
 }
 
-.graphs-container {
-  height: 300px;
-  display: flex;
-  border: 2px solid blue;
-}
-
 .graphs,
 .graphs img {
-  height: 100%;
+  width: 100%;
+  height: auto;
 }
 
 .image-container {
   height: 100%;
+  position: relative;
+}
+
+.button__current-list {
+  border: 2px solid red;
+}
+
+/* name container with picture. color of box is determined by party affiliation */
+
+.name-container__R {
+  background-color: var(--red);
+}
+.name-container__D {
+  background-color: var(--blue);
+}
+.name-container__ID {
+  background-color: var(--green);
+}
+
+.name-container__R,
+.name-container__D,
+.name-container__ID {
+  position: absolute;
+  bottom: 0%;
+  width: 100%;
 }
