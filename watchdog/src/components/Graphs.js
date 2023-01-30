@@ -9,6 +9,7 @@ import {
   Tooltip,
   Legend,
   Title,
+  SubTitle,
 } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 
@@ -21,8 +22,12 @@ ChartJS.register(
   LinearScale,
   Tooltip,
   Legend,
-  Title
+  Title,
+  SubTitle
 );
+
+ChartJS.defaults.font.family = "Merriweather-Regular";
+ChartJS.defaults.font.size = 20;
 
 export default function Graphs(props) {
   // grab "personal explanations" from propublicaAPI
@@ -45,28 +50,21 @@ export default function Graphs(props) {
     blue: "rgb(4, 139, 168)",
     green: "rgb(171,209,181)",
     gray: "rgb(212,210,213)",
+    black: "rgb(22,16,50)",
   };
 
-  const doughnutChartOptions = {
+  const partvVotesChartOptions = {
     plugins: {
-      title: {
-        display: true,
-        text: "Doughnut Chart",
-        color: "blue",
-        font: {
-          size: 34,
-        },
-        padding: {
-          top: 30,
-          bottom: 30,
-        },
-        responsive: true,
-        animation: {
-          animateScale: true,
-        },
-      },
       legend: {
-        position: "bottom",
+        display: false,
+      },
+    },
+  };
+
+  const voteAttendenceChartOptions = {
+    plugins: {
+      legend: {
+        display: false,
       },
     },
   };
@@ -109,26 +107,11 @@ export default function Graphs(props) {
 
   const dwChartOptions = {
     plugins: {
-      title: {
-        display: true,
-        text: `${props.name} is considered ${
-          determineDwNominateDisplay(dwNominatePercent).ideology
-        }`,
-        color: "blue",
-        font: {
-          size: 34,
-        },
-        padding: {
-          top: 30,
-          bottom: 30,
-        },
-        responsive: true,
-        animation: {
-          animateScale: true,
-        },
-      },
       legend: {
-        position: "bottom",
+        display: false,
+      },
+      tooltip: {
+        enabled: false,
       },
     },
   };
@@ -194,37 +177,68 @@ export default function Graphs(props) {
   return (
     <section>
       <div>
-        <h1>Data for {graphsDisplay.name}</h1>
+        <h1>{graphsDisplay.name ? `Data for ${graphsDisplay.name}` : ""}</h1>
       </div>
-      <div className="graphs-container">
-        <div className="graphs">
-          <div className="image-container">
-            <img
-              src={graphsDisplay.imageURL}
-              alt="congress profile"
-              onError={props.replaceImage}
-            ></img>
-            <div className={`name-container__${graphsDisplay.party}`}>
-              <span className="name">{graphsDisplay.name}</span>
+      <section className="display-container">
+        {" "}
+        <div className="image-container">
+          <img
+            src={graphsDisplay.imageURL}
+            alt="congress profile"
+            onError={props.replaceImage}
+          ></img>
+          <div className={`name-container__${graphsDisplay.party}`}>
+            <span className="name">{graphsDisplay.name}</span>
+          </div>
+        </div>
+        <div className="graphs-container">
+          <div className="graphs">
+            {" "}
+            <div>
+              {" "}
+              <Doughnut
+                data={graphsDisplay.partyVotesDisplay}
+                options={partvVotesChartOptions}
+                id="vote-alignment"
+              />
+            </div>
+            <div>
+              {" "}
+              <Doughnut
+                data={graphsDisplay.attendanceDataDisplay}
+                options={voteAttendenceChartOptions}
+                id="vote-attendence"
+              />{" "}
+            </div>
+            <div>
+              {" "}
+              <Doughnut
+                data={graphsDisplay.dwNominateDisplay}
+                options={dwChartOptions}
+                id="ideology"
+              />
             </div>
           </div>
-          <Doughnut
-            className="graphs"
-            data={graphsDisplay.partyVotesDisplay}
-            options={doughnutChartOptions}
-          />{" "}
-          <Doughnut
-            className="graphs"
-            data={graphsDisplay.attendanceDataDisplay}
-            options={doughnutChartOptions}
-          />{" "}
-          <Doughnut
-            className="graphs"
-            data={graphsDisplay.dwNominateDisplay}
-            options={dwChartOptions}
-          />
+          <div className="labels">
+            {" "}
+            <div className="label">
+              {" "}
+              <p>{props.votesWithPartyPercent}%</p>
+              <p>Vote Alignment</p>
+            </div>
+            <div className="label">
+              {" "}
+              <p>{100 - props.missedVotesPercent}%</p>
+              <p>Vote Alignment</p>
+            </div>
+            <div className="label">
+              {" "}
+              <p>Ideology:</p>
+              <p>{dwNominateData.labels}</p>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
     </section>
   );
 }

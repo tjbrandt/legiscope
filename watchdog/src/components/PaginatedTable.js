@@ -1,14 +1,55 @@
 import React from "react";
-
+import PaginationButtons from "./PaginationButtons";
 import ContactIcons from "./ContactIcons";
-import GraphsButton from "./GraphsButton";
-// import Loading from "./Loading";
 import SocialIcons from "./SocialIcons";
+import GraphsButton from "./GraphsButton";
 
-//using a lazy render apprach to getting Details -> as of 01/10/23, I don't fully understand what's going on, but it seems to work. in case it doesn't work out later on, attempt to fix or revert to basic import approach
+export default function PaginatedTable(props) {
+  const list = props.currentList;
+  const rowsPerPage = 10;
 
-export default function Table(props) {
-  const currentList = props.currentList;
+  const [tableRange, setTableRange] = React.useState([]);
+  const [currentGroup, setCurrentGroup] = React.useState([]);
+  const [currentPage, setCurrentPage] = React.useState(1);
+
+  const calculateNumberPages = (list, rowsPerPage) => {
+    const tableRange = [];
+    const numPages = Math.ceil(list.length / rowsPerPage);
+    for (let i = 1; i <= numPages; i++) {
+      tableRange.push(i);
+    }
+    return tableRange;
+  };
+
+  //separate list into currentGroup
+
+  const divideList = (list, page, rowsPerPage) => {
+    return list.slice((page - 1) * rowsPerPage, page * rowsPerPage);
+  };
+
+  //increase and reduce currentPage by one; for use with left and right PaginationButtons
+
+  function currentPageIncrease() {
+    if (currentPage < tableRange.length) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  }
+
+  function currentPageDecrease() {
+    if (currentPage > tableRange[0]) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  }
+
+  //make table and export
+
+  React.useEffect(() => {
+    const range = calculateNumberPages(list, rowsPerPage);
+    setTableRange([...range]);
+
+    const slice = divideList(list, currentPage, rowsPerPage);
+    setCurrentGroup([...slice]);
+  }, [list, setTableRange, currentPage, setCurrentGroup]);
 
   function makeTable(list) {
     const memberGroup = list.map((profile) => {
@@ -73,7 +114,7 @@ export default function Table(props) {
     return memberTable;
   }
 
-  const displayTable = makeTable(currentList);
+  const displayTable = makeTable(currentGroup);
 
   // const senatorDetailsTable = makeTable(senatorList);
   // const representativeDetailsTable = makeTable(representativeList);
@@ -86,6 +127,18 @@ export default function Table(props) {
     <section>
       <div className="table">
         <section>{displayTable}</section>
+      </div>
+      <div className="buttons">
+        <section>
+          <PaginationButtons
+            range={tableRange}
+            slice={currentGroup}
+            setPage={setCurrentPage}
+            increasePage={currentPageIncrease}
+            decreasePage={currentPageDecrease}
+            page={currentPage}
+          />
+        </section>
       </div>
     </section>
   );
