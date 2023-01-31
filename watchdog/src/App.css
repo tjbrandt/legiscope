@@ -154,3 +154,11 @@
 .button__current-list {
   border: 2px solid red;
 }
+
+.button-current-page__active {
+  background-color: aqua;
+}
+
+.button-current-page__inactive {
+  background-color: var(--gray);
+}

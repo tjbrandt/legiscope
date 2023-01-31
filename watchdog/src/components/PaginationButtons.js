@@ -5,9 +5,69 @@ export default function PaginationButtons(props) {
 
   React.useEffect(() => {
     if (slice.length < 1 && page !== 1) {
-      setPage(page - 1);
+      const firstpage = page - 1;
+      setPage(firstpage);
     }
-  }, [slice, page, setPage]);
+  }, [slice, page, setPage, range]);
+
+  console.log("range", range);
+
+  function createGroups(array) {
+    const itemsPerGroup = 5;
+
+    const selectionGroups = array.reduce((resultsArray, item, index) => {
+      const groupIndex = Math.floor(index / itemsPerGroup);
+      if (!resultsArray[groupIndex]) {
+        resultsArray[groupIndex] = [];
+      }
+      resultsArray[groupIndex].push(item);
+
+      return resultsArray;
+    }, []);
+
+    return selectionGroups;
+  }
+
+  const testGroups = createGroups(range);
+
+  const selectionGroupsButtons = testGroups.map((group) => {
+    if (group.includes(page)) {
+      return group.map((el, pageNumber) => {
+        return (
+          <button
+            key={pageNumber}
+            className={` ${"button-current-page"}
+          ${
+            page === el
+              ? "button-current-page__active"
+              : "button-current-page__inactive"
+          }`}
+            onClick={() => setPage(el)}
+          >
+            {el}
+          </button>
+        );
+      });
+    } else {
+      const firstGroupPage = Math.min(...group);
+      const lastGroupPage = Math.max(...group);
+      function buttonDisplay(group) {
+        if (group.length === 1) {
+          return `${firstGroupPage}`;
+        } else {
+          return `${firstGroupPage} - ${lastGroupPage} `;
+        }
+      }
+
+      return (
+        <button key={firstGroupPage} onClick={() => setPage(firstGroupPage)}>
+          {buttonDisplay(group)}
+        </button>
+      );
+    }
+  });
+
+  console.log(selectionGroupsButtons);
 
   return (
     <div>
@@ -15,15 +75,23 @@ export default function PaginationButtons(props) {
         {" "}
         <span>{"\u2190"}</span>{" "}
       </button>
-      {range.map((page, pageNumber) => (
+      {/* {range.map((el, pageNumber) => (
         <button
           key={pageNumber}
-          //TODO set a className and css based on if the button is currently active
-          onClick={() => setPage(page)}
+          className={` ${"button-current-page"}
+          ${
+            page === el
+              ? "button-current-page__active"
+              : "button-current-page__inactive"
+          }`}
+          onClick={() => setPage(el)}
         >
-          {page}
+          {el}
         </button>
-      ))}
+      ))} */}
+
+      {selectionGroupsButtons}
+
       <button onClick={increasePage}>
         {" "}
         <span>{"\u2192"}</span>{" "}

@@ -58,6 +58,9 @@ export default function Graphs(props) {
       legend: {
         display: false,
       },
+      tooltip: {
+        enabled: false,
+      },
     },
   };
 
@@ -65,6 +68,9 @@ export default function Graphs(props) {
     plugins: {
       legend: {
         display: false,
+      },
+      tooltip: {
+        enabled: false,
       },
     },
   };
@@ -77,12 +83,7 @@ export default function Graphs(props) {
     rotation: -90,
   };
 
-  //TODO learn and adjust charts to have labels on the bottom and have the gauge chart show dDND result in "title" section rather than a label
-  //TODO adjust -ChartOptions variables to match design goals
-  //TODO remove labels from dwChart
-
-  //calculate where dwNominate pointer should go based on:
-  // ((input - min) * 100) / (max - min),
+  //calculate dwNominate scale should go based on: ((input - min) * 100) / (max - min),
   //where input comes from dwNominate, max = 1, and min = -1
   const dwNominatePercent = ((props.dwNominate + 1) / 2) * 100;
 
