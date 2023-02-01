@@ -5,7 +5,11 @@
   --red: rgb(232, 72, 85);
   --blue: rgb(4, 139, 168);
   --green: rgb(171, 209, 181);
-  --gray: rgb(212, 210, 213);
+  --gray: rgb(234, 236, 235);
+  --gray__dark: rgb(212, 210, 213);
+  --white: rgb(249, 249, 249);
+  --black: rgb(22, 16, 50);
+  --black__light: rgb(22, 16, 50, 0.5);
 }
 
 * {
@@ -21,18 +25,79 @@
   text-align: center;
 }
 
-/* Tables */
+/* Search/Filter functions */
 
-.table {
-  border: 3px solid green;
+.app--filter {
+  background-color: var(--gray);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0 16px 0;
 }
 
-/* .table :is(td, th) {
-  border: 1px solid black;
-} */
+.app--filter-all {
+  width: 90%;
+  background-color: var(--white);
+  border-radius: 5%;
+}
 
-.table img {
-  height: 20px;
+.app--filter-switch {
+  padding: 8px 0 8px 0;
+}
+
+/* TODO finish CSS on senate/house switch */
+
+.app--filter-switch-senate {
+  color: red;
+}
+
+.app--filter-switch-house {
+  color: blue;
+}
+
+.app--filter-inputs {
+  display: flex;
+}
+
+/* Tables and Page Buttons*/
+
+.app--table {
+  background-color: var(--gray);
+}
+
+.component--table {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.table-container {
+  width: 90%;
+}
+
+.table {
+  border-collapse: collapse;
+  border: 1px solid var(--gray);
+  border-radius: 3%;
+  width: 100%;
+  background-color: var(--white);
+}
+
+.table-headers th {
+  color: var(--black__light);
+}
+
+.table-rows,
+table thead :last-child {
+  border-bottom: 1px solid var(--gray);
+}
+
+.table-rows td,
+.table-headers th {
+  padding-left: 24px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .table-header--contact,
@@ -42,8 +107,46 @@
   display: none;
 }
 
-.table-rows :last-child {
+.table img {
+  height: 20px;
+}
+
+.button-show-stats {
+  border: 1px solid var(--gray__dark);
+  border-radius: 5%;
+  background-color: var(--white);
+}
+
+.component--page-buttons {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
   width: 100%;
+  margin: 16px 0 16px 0;
+}
+
+.component--page-buttons button {
+  height: 24px;
+  border: 1px solid var(--gray);
+  border-radius: 15%;
+  margin: 0 8px 8px 0;
+}
+
+.button-current-page__active {
+  background-color: var(--black);
+  color: var(--white);
+}
+
+.button-current-page__inactive {
+  background-color: var(--white);
+}
+
+.button-page-selection {
+  background-color: var(--white);
+}
+
+.button-page-selection img {
+  height: 100%;
 }
 
 /* Display Container for Graphs*/
@@ -52,9 +155,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
   width: 100%;
-
   border: 2px solid var(--blue);
 }
 
@@ -149,16 +250,4 @@
 
 .label p {
   margin: 0 0 10% 0;
-}
-
-.button__current-list {
-  border: 2px solid red;
-}
-
-.button-current-page__active {
-  background-color: aqua;
-}
-
-.button-current-page__inactive {
-  background-color: var(--gray);
 }

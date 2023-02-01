@@ -10,8 +10,6 @@ export default function PaginationButtons(props) {
     }
   }, [slice, page, setPage, range]);
 
-  console.log("range", range);
-
   function createGroups(array) {
     const itemsPerGroup = 5;
 
@@ -28,9 +26,9 @@ export default function PaginationButtons(props) {
     return selectionGroups;
   }
 
-  const testGroups = createGroups(range);
+  const pageGroups = createGroups(range);
 
-  const selectionGroupsButtons = testGroups.map((group) => {
+  const selectionGroupsButtons = pageGroups.map((group) => {
     if (group.includes(page)) {
       return group.map((el, pageNumber) => {
         return (
@@ -60,41 +58,29 @@ export default function PaginationButtons(props) {
       }
 
       return (
-        <button key={firstGroupPage} onClick={() => setPage(firstGroupPage)}>
+        <button
+          key={firstGroupPage}
+          className="button-current-page__inactive"
+          onClick={() => setPage(firstGroupPage)}
+        >
           {buttonDisplay(group)}
         </button>
       );
     }
   });
 
-  console.log(selectionGroupsButtons);
-
   return (
-    <div>
-      <button onClick={decreasePage}>
+    <div className="component--page-buttons">
+      <button onClick={decreasePage} className="button-page-selection">
         {" "}
-        <span>{"\u2190"}</span>{" "}
+        <img src="images/left_arrow_icon.png" alt="left arrow"></img>
       </button>
-      {/* {range.map((el, pageNumber) => (
-        <button
-          key={pageNumber}
-          className={` ${"button-current-page"}
-          ${
-            page === el
-              ? "button-current-page__active"
-              : "button-current-page__inactive"
-          }`}
-          onClick={() => setPage(el)}
-        >
-          {el}
-        </button>
-      ))} */}
 
       {selectionGroupsButtons}
 
-      <button onClick={increasePage}>
+      <button onClick={increasePage} className="button-page-selection">
         {" "}
-        <span>{"\u2192"}</span>{" "}
+        <img src="images/right_arrow_icon.png" alt="left arrow"></img>{" "}
       </button>
     </div>
   );

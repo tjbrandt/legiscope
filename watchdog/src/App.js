@@ -1,20 +1,26 @@
 import "./App.css";
 import Loading from "./components/Loading";
 import React, { Suspense } from "react";
-import { getMemberData } from "./modules/propublicaAPIcalls";
+import getMemberData from "./modules/propublicaAPIcalls";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import Graphs from "./components/Graphs";
 import CurrentListButton from "./components/CurrentListButton";
+import { statesList, statesAbbreviations } from "./modules/unitedStates";
+import SearchField from "./components/SearchField";
+import SelectField from "./components/SelectField";
 import PaginatedTable from "./components/PaginatedTable";
-
-const Table = React.lazy(() => import("./components/Table"));
 
 function App() {
   //states
   const [senatorList, setSenatorList] = React.useState([]);
   const [representativeList, setRepresentativeList] = React.useState([]);
   const [currentList, setCurrentList] = React.useState([]);
+  const [currentListName, setCurrentListName] = React.useState("senate");
+  const [searchValue, setSearchValue] = React.useState("");
+  const [filterValue, setFilterValue] = React.useState("");
+  const [filteredList, setFilteredList] = React.useState([]);
   const [graphsData, setGraphsData] = React.useState({
     dwNominate: 0,
     votesWithPartyPercent: 49,
@@ -74,6 +80,39 @@ function App() {
     setCurrentList((prevList) =>
       prevList === senatorList ? representativeList : senatorList
     );
+    setCurrentListName((prevName) =>
+      prevName === "senate" ? "house" : "senate"
+    );
+  }
+
+  //show table items that match search and filtering by state/territory
+  function handleSearch(event) {
+    setSearchValue(event.target.value);
+  }
+
+  function handleFilter(event) {
+    const stateAbbreviation = statesAbbreviations[event.target.value];
+    setFilterValue(stateAbbreviation);
+  }
+
+  React.useEffect(() => {
+    if (filterValue === "") {
+      setFilteredList(currentList);
+      document.getElementById("selectedState").selectedIndex = 0;
+    }
+    const searchResultList = currentList.filter((person) => {
+      const fullName = `${person.personalDetails.firstName} ${person.personalDetails.lastName}`;
+      return (
+        fullName.toLowerCase().includes(searchValue) &&
+        person.personalDetails.state.includes(filterValue)
+      );
+    });
+    setFilteredList(searchResultList);
+  }, [filterValue, searchValue, currentList]);
+
+  function resetSearchAndFilter() {
+    setSearchValue("");
+    setFilterValue("");
   }
 
   return (
@@ -86,12 +125,41 @@ function App() {
           <Graphs {...graphsData} replaceImage={replaceImage} />
         </div>
       )}
+      <section className="app--filter">
+        <div className="app--filter-all">
+          {" "}
+          <CurrentListButton
+            changeCurentList={changeCurentList}
+            currentListName={currentListName}
+            resetSearch={resetSearchAndFilter}
+          />
+          <div className="app--filter-inputs">
+            {" "}
+            <SearchField
+              searchValue={searchValue}
+              handleSearch={handleSearch}
+            />
+            <SelectField handleFilter={handleFilter} />
+            <button onClick={resetSearchAndFilter}>Reset Search</button>
+          </div>
+        </div>
+      </section>
 
-      <CurrentListButton changeCurentList={changeCurentList} />
-      <Suspense fallback={<Loading />}>
-        {/* <Table changeGraphs={changeGraphs} currentList={currentList} /> */}
-        <PaginatedTable changeGraphs={changeGraphs} currentList={currentList} />
-      </Suspense>
+      <section className="app--table">
+        {" "}
+        {searchValue || filterValue ? (
+          <PaginatedTable
+            changeGraphs={changeGraphs}
+            currentList={filteredList}
+          />
+        ) : (
+          <PaginatedTable
+            changeGraphs={changeGraphs}
+            currentList={currentList}
+          />
+        )}
+      </section>
+      <Footer />
     </div>
   );
 }

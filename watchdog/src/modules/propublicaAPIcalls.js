@@ -100,4 +100,4 @@ async function getMemberData(chamber) {
 //   return [topCounts[0][0], topCounts[1][0], topCounts[2][0]];
 // }
 
-export { getMemberData };
+export default getMemberData;

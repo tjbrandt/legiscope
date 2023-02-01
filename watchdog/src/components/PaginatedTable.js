@@ -87,58 +87,52 @@ export default function PaginatedTable(props) {
       };
     });
     const memberTable = (
-      <table>
-        <thead>
-          <tr className="table-headers">
-            <th className="table-header--name">Name</th>
-            <th className="table-header--state">State</th>
-            <th className="table-header--party">Party</th>
-            <th className="table-header--contact">Contact</th>
-            <th className="table-header--socials">Socials</th>
-          </tr>
-        </thead>
-        <tbody>
-          {memberGroup.map((member) => (
-            <tr className="table-rows">
-              <td className="table-data--name">{member.name}</td>
-              <td className="table-data--state">{member.state}</td>
-              <td className="table-data--party">{member.party}</td>
-              <td className="table-data--contact">{member.contact}</td>
-              <td className="table-data--socials">{member.socials}</td>
-              <td className="table-data--button">{member.button}</td>
+      <section className="member-list">
+        <table className="table">
+          <thead>
+            <tr className="table-headers">
+              <th className="table-header--name">Name</th>
+              <th className="table-header--state">State</th>
+              <th className="table-header--party">Party</th>
+              <th className="table-header--contact">Contact</th>
+              <th className="table-header--socials">Socials</th>
+              <th className="table-header--button"></th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+            <tr className="table-bottom-border"></tr>
+          </thead>
+          <tbody>
+            {memberGroup.map((member) => (
+              <tr className="table-rows" key={member.id}>
+                <td className="table-data--name">{member.name}</td>
+                <td className="table-data--state">{member.state}</td>
+                <td className="table-data--party">{member.party}</td>
+                <td className="table-data--contact">{member.contact}</td>
+                <td className="table-data--socials">{member.socials}</td>
+                <td className="table-data--button">{member.button}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
     );
     return memberTable;
   }
 
   const displayTable = makeTable(currentGroup);
 
-  // const senatorDetailsTable = makeTable(senatorList);
-  // const representativeDetailsTable = makeTable(representativeList);
-  // const currentTable =
-  //   props.currentList === "senate"
-  //     ? senatorDetailsTable
-  //     : representativeDetailsTable;
-
   return (
-    <section>
-      <div className="table">
-        <section>{displayTable}</section>
-      </div>
-      <div className="buttons">
-        <section>
-          <PaginationButtons
-            range={tableRange}
-            slice={currentGroup}
-            setPage={setCurrentPage}
-            increasePage={currentPageIncrease}
-            decreasePage={currentPageDecrease}
-            page={currentPage}
-          />
-        </section>
+    <section className="component--table">
+      <div className="table-container">
+        {" "}
+        {displayTable}
+        <PaginationButtons
+          range={tableRange}
+          slice={currentGroup}
+          setPage={setCurrentPage}
+          increasePage={currentPageIncrease}
+          decreasePage={currentPageDecrease}
+          page={currentPage}
+        />
       </div>
     </section>
   );

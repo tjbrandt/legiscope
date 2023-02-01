@@ -6,5 +6,9 @@ export default function GraphsButton(props) {
     updateGraphs(props.id);
   }
 
-  return <button onClick={handleclick}>Show Graphs</button>;
+  return (
+    <button className="button-show-stats" onClick={handleclick}>
+      See stats
+    </button>
+  );
 }
