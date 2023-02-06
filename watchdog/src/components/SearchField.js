@@ -5,6 +5,7 @@ export default function SearchField(props) {
 
   return (
     <input
+      className="app--filter-inputs-search"
       type="text"
       name="searchTerm"
       value={searchValue}

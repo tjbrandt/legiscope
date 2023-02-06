@@ -2,13 +2,14 @@
 
 /* Templates/variables */
 :root {
-  --red: rgb(232, 72, 85);
+  --red: #e84855;
   --blue: rgb(4, 139, 168);
   --green: rgb(171, 209, 181);
   --gray: rgb(234, 236, 235);
   --gray__dark: rgb(212, 210, 213);
   --white: rgb(249, 249, 249);
   --black: rgb(22, 16, 50);
+  --black__mid: rgba(22, 16, 50, 0.75);
   --black__light: rgb(22, 16, 50, 0.5);
 }
 
@@ -21,8 +22,137 @@
   src: url("./fonts/Merriweather-Regular.ttf");
 }
 
+@font-face {
+  font-family: "Merriweather-Italics";
+  src: url("./fonts/Merriweather-Italic.ttf");
+}
+
 .App {
   text-align: center;
+  background-color: var(--gray);
+}
+
+/* Header/Footer */
+.header,
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 96px;
+  background-color: var(--black);
+  color: var(--white);
+}
+
+.header--logo-legiscope,
+.footer--logo-legiscope {
+  height: 88px;
+  width: 120px;
+  margin-top: 8px;
+  background-image: url("../public/images/legiscope_logo.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.header--nav {
+  display: flex;
+  margin-right: 5%;
+}
+
+.header--nav-bars__active {
+  display: flex;
+  flex-direction: column;
+  transform: rotate(0deg);
+  transition: transform 0.25s ease-in-out;
+}
+
+.header--nav-bars__inactive {
+  display: flex;
+  flex-direction: column;
+  transform: rotate(-90deg);
+  transition: transform 0.25s ease-in-out;
+}
+
+.header--nav-bar {
+  width: 32px;
+  height: 4px;
+  margin: 5%;
+  background-color: var(--white);
+}
+
+.header--nav-list__active {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 100px;
+  background-color: var(--black);
+  color: var(--white);
+  list-style: none;
+  padding: 0%;
+  margin: 0%;
+  border-top: 1px solid var(--gray);
+  animation: opacity-in 0.25s;
+}
+
+.header--nav-list__inactive {
+  display: none;
+}
+
+.nav-list--source,
+.nav-list--github {
+  color: var(--white);
+}
+
+.nav-list--source :is(a, a:visited),
+.nav-list--github :is(a, a:visited) {
+  text-decoration: none;
+  color: var(--white);
+}
+
+.nav-list--link-icon {
+  height: 20px;
+}
+
+@keyframes opacity-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.footer--creator {
+  color: var(--white);
+  margin-right: 5%;
+}
+
+/* Hero Section */
+
+.hero--container {
+  height: 512px;
+  position: relative;
+  text-align: center;
+  background-image: url("../public/congressprofiles/default.jpg");
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.hero--container p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--white);
+  font-family: "Merriweather-Regular";
+  font-size: 2em;
+  background-color: var(--black__mid);
+  padding: 10%;
+  width: 100%;
 }
 
 /* Search/Filter functions */
@@ -39,25 +169,71 @@
 .app--filter-all {
   width: 90%;
   background-color: var(--white);
-  border-radius: 5%;
+  border-radius: 5px;
 }
 
 .app--filter-switch {
   padding: 8px 0 8px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* TODO finish CSS on senate/house switch */
+.app--filter-switch-senate,
+.app--filter-switch-house {
+  width: 168px;
+  height: 24px;
+}
 
 .app--filter-switch-senate {
-  color: red;
+  border-radius: 5px 0 0 5px;
 }
 
 .app--filter-switch-house {
-  color: blue;
+  border-radius: 0 5px 5px 0;
+}
+
+.app--filter-switch__active {
+  background-color: var(--black);
+  color: var(--white);
+}
+.app--filter-switch__inactive {
+  background-color: var(--gray__dark);
+  color: var(--black);
 }
 
 .app--filter-inputs {
   display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 8px 0 8px 0;
+}
+
+.app--filter-inputs-search,
+.app--filter-inputs-select,
+.app--filter-inputs-reset {
+  height: 24px;
+  border-radius: 5px;
+}
+
+.app--filter-inputs-search {
+  background-color: var(--gray);
+  border-style: solid;
+  border-color: var(--black);
+  width: 30%;
+  text-indent: 8%;
+}
+
+.app--filter-inputs-select {
+  width: 40%;
+  background-color: var(--gray);
+}
+
+.app--filter-inputs-reset {
+  width: 20%;
+  background-color: var(--gray);
+  border-style: solid;
+  border-color: var(--black);
 }
 
 /* Tables and Page Buttons*/
@@ -79,7 +255,7 @@
 .table {
   border-collapse: collapse;
   border: 1px solid var(--gray);
-  border-radius: 3%;
+  border-radius: 10px;
   width: 100%;
   background-color: var(--white);
 }
@@ -95,9 +271,7 @@ table thead :last-child {
 
 .table-rows td,
 .table-headers th {
-  padding-left: 24px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding: 8px 12px 8px 12px;
 }
 
 .table-header--contact,
@@ -107,13 +281,9 @@ table thead :last-child {
   display: none;
 }
 
-.table img {
-  height: 20px;
-}
-
 .button-show-stats {
   border: 1px solid var(--gray__dark);
-  border-radius: 5%;
+  border-radius: 5px;
   background-color: var(--white);
 }
 
@@ -127,8 +297,8 @@ table thead :last-child {
 
 .component--page-buttons button {
   height: 24px;
-  border: 1px solid var(--gray);
-  border-radius: 15%;
+  border: 1px solid var(--gray__dark);
+  border-radius: 5px;
   margin: 0 8px 8px 0;
 }
 
@@ -151,12 +321,28 @@ table thead :last-child {
 
 /* Display Container for Graphs*/
 
+.app--graphs-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 24px;
+}
+
+.app--graphs {
+  background-color: var(--white);
+  width: 90%;
+  border-radius: 5px;
+}
+
+.app--graphs-name {
+  border-bottom: 1px solid var(--gray__dark);
+}
+
 .display-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  border: 2px solid var(--blue);
+  margin-top: 5%;
 }
 
 /*Image Container*/
@@ -164,6 +350,7 @@ table thead :last-child {
 .image-container {
   width: 40%;
   position: relative;
+  border: 5px solid var(--gray__dark);
 }
 
 .image-container img {
@@ -191,31 +378,8 @@ table thead :last-child {
   font-family: "Merriweather-Regular";
 }
 
-/* Hero Section */
-
-.hero--container {
-  width: 100%;
-  position: relative;
-  text-align: center;
-}
-
-.hero--container img {
-  width: 100%;
-  filter: blur(2px);
-}
-
-.hero--container p {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: var(--gray);
-  font-family: "Merriweather-Regular";
-}
-
 /* Graphs */
 .graphs-container {
-  border: 2px solid var(--green);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -224,21 +388,26 @@ table thead :last-child {
 }
 
 .graphs {
-  /* border: 2px solid var(--gray); */
   width: 100%;
   display: flex;
   justify-content: space-around;
+  margin-top: 16px;
 }
 
 .graphs > div {
   width: 30%;
+  border: 1px solid var(--gray__dark);
+  border-radius: 5px;
+  padding: 0 0.5% 0 0.5%;
+  display: flex;
+  justify-content: center;
 }
 
 .labels {
-  /* border: 2px solid var(--gray); */
   width: 100%;
   display: flex;
   justify-content: space-around;
+  margin-top: 2%;
 }
 
 .label {
@@ -250,4 +419,70 @@ table thead :last-child {
 
 .label p {
   margin: 0 0 10% 0;
+}
+
+.explanations-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.explanations {
+  list-style: none;
+  padding: 0%;
+  font-size: 0.75em;
+  font-family: "Merriweather-Italics";
+}
+
+.explanations li {
+  margin-bottom: 8px;
+  margin-left: 16px;
+  text-align: left;
+}
+
+@media screen and (min-width: 1200px) {
+  .header--logo-legiscope {
+    margin-left: 3%;
+  }
+  .display-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .image-container {
+    width: 25%;
+    margin-bottom: 5%;
+  }
+
+  .graphs-container {
+    width: 60%;
+    margin-top: -5%;
+  }
+
+  .table-header--contact,
+  .table-header--socials,
+  .table-data--contact,
+  .table-data--socials {
+    display: table-cell;
+  }
+
+  .table__contact-links {
+    display: flex;
+    justify-content: center;
+  }
+
+  .table__social-links {
+    display: flex;
+    justify-content: center;
+  }
+
+  .table__contact-links :is(div),
+  .table__social-links :is(div) {
+    margin: 0 3% 0 3%;
+  }
+
+  .table img {
+    height: 32px;
+  }
 }

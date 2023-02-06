@@ -1,13 +1,12 @@
 import "./App.css";
-import Loading from "./components/Loading";
-import React, { Suspense } from "react";
+import React from "react";
 import getMemberData from "./modules/propublicaAPIcalls";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import Graphs from "./components/Graphs";
 import CurrentListButton from "./components/CurrentListButton";
-import { statesList, statesAbbreviations } from "./modules/unitedStates";
+import { statesAbbreviations } from "./modules/unitedStates";
 import SearchField from "./components/SearchField";
 import SelectField from "./components/SelectField";
 import PaginatedTable from "./components/PaginatedTable";
@@ -121,7 +120,7 @@ function App() {
       {showHero ? (
         <Hero />
       ) : (
-        <div>
+        <div className="app--graphs-container">
           <Graphs {...graphsData} replaceImage={replaceImage} />
         </div>
       )}
@@ -140,7 +139,12 @@ function App() {
               handleSearch={handleSearch}
             />
             <SelectField handleFilter={handleFilter} />
-            <button onClick={resetSearchAndFilter}>Reset Search</button>
+            <button
+              className="app--filter-inputs-reset"
+              onClick={resetSearchAndFilter}
+            >
+              Reset
+            </button>
           </div>
         </div>
       </section>

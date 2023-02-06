@@ -176,13 +176,14 @@ export default function Graphs(props) {
   //TODO edit dwNominate graph to replace key with "graph title" that shows % and leaning
 
   return (
-    <section>
-      <div>
+    <section className="app--graphs">
+      <div className="app--graphs-name">
         <h1>{graphsDisplay.name ? `Data for ${graphsDisplay.name}` : ""}</h1>
       </div>
       <section className="display-container">
         {" "}
         <div className="image-container">
+          {" "}
           <img
             src={graphsDisplay.imageURL}
             alt="congress profile"
@@ -224,19 +225,33 @@ export default function Graphs(props) {
             {" "}
             <div className="label">
               {" "}
-              <p>{props.votesWithPartyPercent}%</p>
+              <p>{props.votesWithPartyPercent.toFixed(2)}%</p>
               <p>Vote Alignment</p>
             </div>
             <div className="label">
               {" "}
-              <p>{100 - props.missedVotesPercent}%</p>
-              <p>Vote Alignment</p>
+              <p>{(100 - props.missedVotesPercent).toFixed(2)}%</p>
+              <p>Vote Attendence</p>
             </div>
             <div className="label">
               {" "}
               <p>Ideology:</p>
               <p>{dwNominateData.labels}</p>
             </div>
+          </div>
+          <div className="explanations-container">
+            <ul className="explanations">
+              <li>
+                Vote Alignment: how often this member votes with their party.
+              </li>
+              <li>
+                Vote Attendence: how often this member participates in votes.
+              </li>
+              <li>
+                Ideology: an estimate of this member's political leanings based
+                on the dwNominate methodology.
+              </li>
+            </ul>
           </div>
         </div>
       </section>

@@ -20,7 +20,7 @@ export default function SocialIcons(props) {
 
   return (
     <div>
-      <div className="list-item__socials">
+      <div className="table__social-links">
         <div className="socials__twitter">
           {socialInfo.twitterAccount && (
             <a

@@ -1,6 +1,7 @@
 import axios from "axios";
 
 //apiCall info
+//Be sure to check if current congress data is available; as of 2/2/23, the 118th Senate chamber is unavailable; for demonstration purposes, use 117th
 const currentCongress = 117;
 const apiConfig = {
   headers: {
