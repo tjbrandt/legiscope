@@ -27,6 +27,11 @@
   src: url("./fonts/Merriweather-Italic.ttf");
 }
 
+@font-face {
+  font-family: "Lato-Regular";
+  src: url("./fonts/Lato-Regular.ttf");
+}
+
 .App {
   text-align: center;
   background-color: var(--gray);
@@ -104,6 +109,7 @@
 .nav-list--source,
 .nav-list--github {
   color: var(--white);
+  font-family: "Lato-Regular";
 }
 
 .nav-list--source :is(a, a:visited),
@@ -128,6 +134,7 @@
 .footer--creator {
   color: var(--white);
   margin-right: 5%;
+  font-family: "Lato-Regular";
 }
 
 /* Hero Section */
@@ -177,6 +184,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: "Lato-Regular";
 }
 
 .app--filter-switch-senate,
@@ -258,6 +266,7 @@
   border-radius: 10px;
   width: 100%;
   background-color: var(--white);
+  font-family: "Lato-Regular";
 }
 
 .table-headers th {
@@ -284,7 +293,14 @@ table thead :last-child {
 .button-show-stats {
   border: 1px solid var(--gray__dark);
   border-radius: 5px;
-  background-color: var(--white);
+  background-color: var(--black);
+  color: var(--white);
+  font-family: "Lato-Regular";
+  height: 32px;
+}
+
+.button-show-stats span {
+  margin: 10px;
 }
 
 .component--page-buttons {
@@ -300,6 +316,10 @@ table thead :last-child {
   border: 1px solid var(--gray__dark);
   border-radius: 5px;
   margin: 0 8px 8px 0;
+}
+
+.button-current-page {
+  font-family: "Lato-Regular";
 }
 
 .button-current-page__active {
@@ -335,6 +355,7 @@ table thead :last-child {
 
 .app--graphs-name {
   border-bottom: 1px solid var(--gray__dark);
+  font-family: "Merriweather-Regular";
 }
 
 .display-container {
@@ -437,6 +458,17 @@ table thead :last-child {
   margin-bottom: 8px;
   margin-left: 16px;
   text-align: left;
+}
+
+/* Error box */
+.error-container {
+  height: 320px;
+  background-color: var(--white);
+  margin: 0 5% 0 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Lato-Regular";
 }
 
 @media screen and (min-width: 1200px) {

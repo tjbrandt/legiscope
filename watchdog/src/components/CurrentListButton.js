@@ -36,7 +36,6 @@ export default function CurrentListButton(props) {
               ? "app--filter-switch__active"
               : "app--filter-switch__inactive"
           }`}
-        disabled
       >
         Senate
       </button>

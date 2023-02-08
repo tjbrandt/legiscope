@@ -39,6 +39,7 @@ export default function Header() {
             href="https://www.propublica.org/datastore/api/propublica-congress-api"
             target="_blank"
             rel="noreferrer"
+            title="go to propublica congress api website"
           >
             {" "}
             ProPublica Congress API{" "}
@@ -55,6 +56,7 @@ export default function Header() {
             href="https://github.com/tjbrandt/legiscope"
             target="_blank"
             rel="noreferrer"
+            title="go to github repository for legiscope"
           >
             {" "}
             See this project on GitHub{" "}
@@ -69,5 +71,3 @@ export default function Header() {
     </section>
   );
 }
-
-/*TODO don't forget to use hamburger setup for mobile version */

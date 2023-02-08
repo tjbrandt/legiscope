@@ -8,7 +8,7 @@ export default function GraphsButton(props) {
 
   return (
     <button className="button-show-stats" onClick={handleclick}>
-      See stats
+      <span>See stats</span>
     </button>
   );
 }

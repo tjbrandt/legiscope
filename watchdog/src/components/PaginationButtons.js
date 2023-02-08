@@ -85,5 +85,3 @@ export default function PaginationButtons(props) {
     </div>
   );
 }
-
-//TODO add button that acts as "...", similar to Sales Overview Page after page 5 but before page 64

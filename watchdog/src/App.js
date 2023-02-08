@@ -10,9 +10,9 @@ import { statesAbbreviations } from "./modules/unitedStates";
 import SearchField from "./components/SearchField";
 import SelectField from "./components/SelectField";
 import PaginatedTable from "./components/PaginatedTable";
+import Error from "./components/Error";
 
 function App() {
-  //states
   const [senatorList, setSenatorList] = React.useState([]);
   const [representativeList, setRepresentativeList] = React.useState([]);
   const [currentList, setCurrentList] = React.useState([]);
@@ -29,19 +29,25 @@ function App() {
     name: "",
   });
   const [showHero, setShowHero] = React.useState(true);
+  const [error, setError] = React.useState(false);
 
   //API call to get congress person data from ProPublica
-  //TODO set up error checking to return an error component if API calls fail, then set up ternery-esque variable, like in Table for senate vs house
+
   React.useEffect(
     () =>
       async function () {
         // proPublicaAPI function from module performs call twice to gather information from both chambers
-        const senatorList = await getMemberData("senate");
-        const representativeList = await getMemberData("house");
+        try {
+          const senatorList = await getMemberData("senate");
+          const representativeList = await getMemberData("house");
 
-        setSenatorList(senatorList);
-        setRepresentativeList(representativeList);
-        setCurrentList(senatorList);
+          setSenatorList(senatorList);
+          setRepresentativeList(representativeList);
+          setCurrentList(senatorList);
+        } catch (err) {
+          console.log(err);
+          setError(true);
+        }
       },
     []
   );
@@ -151,7 +157,9 @@ function App() {
 
       <section className="app--table">
         {" "}
-        {searchValue || filterValue ? (
+        {error ? (
+          <Error />
+        ) : searchValue || filterValue ? (
           <PaginatedTable
             changeGraphs={changeGraphs}
             currentList={filteredList}

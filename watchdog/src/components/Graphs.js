@@ -173,8 +173,6 @@ export default function Graphs(props) {
     party: props.party,
   };
 
-  //TODO edit dwNominate graph to replace key with "graph title" that shows % and leaning
-
   return (
     <section className="app--graphs">
       <div className="app--graphs-name">
