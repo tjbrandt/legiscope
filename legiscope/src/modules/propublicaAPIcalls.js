@@ -5,7 +5,7 @@ import axios from "axios";
 const currentCongress = 117;
 const apiConfig = {
   headers: {
-    "X-API-KEY": "n22gDuWizet5es8pM29aS3DPAyfc6uLd3QobALHF",
+    "X-API-KEY": {"Your API Key Here"},
   },
 };
 
