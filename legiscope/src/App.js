@@ -92,6 +92,7 @@ function App() {
 
   //show table items that match search and filtering by state/territory
   function handleSearch(event) {
+    console.log(event.target.value);
     setSearchValue(event.target.value);
   }
 
@@ -108,7 +109,7 @@ function App() {
     const searchResultList = currentList.filter((person) => {
       const fullName = `${person.personalDetails.firstName} ${person.personalDetails.lastName}`;
       return (
-        fullName.toLowerCase().includes(searchValue) &&
+        fullName.toLowerCase().includes(searchValue.toLowerCase()) &&
         person.personalDetails.state.includes(filterValue)
       );
     });
