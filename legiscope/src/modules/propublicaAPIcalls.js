@@ -1,11 +1,11 @@
 import axios from "axios";
 
 //apiCall info
-//Be sure to check if current congress data is available; as of 2/2/23, the 118th Senate chamber is unavailable; for demonstration purposes, use 117th
+//Be sure to check if current congress data is available; as of 2/2/23, the 118th Senate chamber is unavailable;
 const currentCongress = 117;
 const apiConfig = {
   headers: {
-    "X-API-KEY": "n22gDuWizet5es8pM29aS3DPAyfc6uLd3QobALHF",
+    "X-API-KEY": {"Your API Key Here"},
   },
 };
 
@@ -71,34 +71,5 @@ async function getMemberData(chamber) {
   return memberList;
 }
 
-//as of 1/10/23, the Personal Reasons url leads to a 500 error from ProPublica; as such, we won't be able to extract data. Commenting out code to decide what to do with it (fingers crossed ProPublica will have a fix soon)
-
-// async function getPersonalReasons(idnumber) {
-//   const memberID = idnumber;
-//   const personalReasonsURL = `https://api.propublica.org/congress/v1/members/${memberID}/explanations/${currentCongress}.json`;
-
-//   //get personal reasons from API
-//   const personalReasonsData = await axios.get(personalReasonsURL, apiConfig);
-//   console.log(personalReasonsData);
-
-//   //map each result to an array
-//   const personalReasons = personalReasonsData.data.results[0].map((result) => {
-//     return result.category;
-//   });
-
-//   //establish counts of each reason
-//   const counts = {};
-//   for (let reason of personalReasons) {
-//     counts[reason] = counts[reason] ? counts[reason] + 1 : 1;
-//   }
-
-//   //get top 3 reasons by sorting counts and pulling
-//   const topCounts = Object.entries(counts)
-//     .sort((a, b) => b[1] - a[1])
-//     .slice(0, 3);
-
-//   //return array with names
-//   return [topCounts[0][0], topCounts[1][0], topCounts[2][0]];
-// }
 
 export default getMemberData;
