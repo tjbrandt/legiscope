@@ -1,6 +1,6 @@
 # Welcome to Legiscope!
 
-##Key Technologies Needed: React | JavaScript | CSS
+## Key Technologies Needed: React | JavaScript | CSS
 
 Legiscope utilizes the ProPublica Congress API and React to provide users with a graphical display of information for Senators and/or Representatives.
 
