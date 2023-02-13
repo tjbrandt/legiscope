@@ -1,3 +1,5 @@
+# Welcome to Legiscope!
+
 Legiscope utilizes the ProPublica Congress API and React to provide users with a graphical display of information for Senators and/or Representatives.
 
 Use the Senate/House buttons and search fields to locate a Congressional member of interest:
