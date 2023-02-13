@@ -5,9 +5,11 @@ import axios from "axios";
 const currentCongress = 117;
 const apiConfig = {
   headers: {
-    "X-API-KEY": {"Your API Key Here"},
+    "X-API-KEY": `${process.env.REACT_APP_PP_API_KEY}`,
   },
 };
+
+console.log(process.env.REACT_APP_PP_API_KEY);
 
 //get list of members from ProPublica and map them to profiles to later distribute as props
 async function getMemberData(chamber) {
@@ -70,6 +72,5 @@ async function getMemberData(chamber) {
 
   return memberList;
 }
-
 
 export default getMemberData;
