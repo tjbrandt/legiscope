@@ -9,7 +9,7 @@ const apiConfig = {
   },
 };
 
-console.log(process.env.REACT_APP_PP_API_KEY);
+//note: for security reasons, I am storing my API key in an .env file; for a quick tutorial on replicating this apporach, see this StackOverflow question: https://stackoverflow.com/questions/48699820/how-do-i-hide-an-api-key-in-create-react-app
 
 //get list of members from ProPublica and map them to profiles to later distribute as props
 async function getMemberData(chamber) {

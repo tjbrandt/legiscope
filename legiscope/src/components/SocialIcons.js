@@ -16,15 +16,13 @@ export default function SocialIcons(props) {
         : `https://www.youtube.com/results?search_query=${props.youtubeAccount}&sp=EgIQAg%253D%253D`,
   };
 
-  const [socialInfo, setSocialInfo] = React.useState(socialProps);
-
   return (
     <div>
       <div className="table__social-links">
         <div className="socials__twitter">
-          {socialInfo.twitterAccount && (
+          {socialProps.twitterAccount && (
             <a
-              href={socialInfo.twitterAccount}
+              href={socialProps.twitterAccount}
               target="_blank"
               rel="noreferrer"
             >
@@ -36,9 +34,9 @@ export default function SocialIcons(props) {
           )}
         </div>
         <div className="socials_facebook">
-          {socialInfo.facebookAccount && (
+          {socialProps.facebookAccount && (
             <a
-              href={socialInfo.facebookAccount}
+              href={socialProps.facebookAccount}
               target="_blank"
               rel="noreferrer"
             >
@@ -50,9 +48,9 @@ export default function SocialIcons(props) {
           )}
         </div>
         <div className="socials_youtube">
-          {socialInfo.youtubeAccount && (
+          {socialProps.youtubeAccount && (
             <a
-              href={socialInfo.youtubeAccount}
+              href={socialProps.youtubeAccount}
               target="_blank"
               rel="noreferrer"
             >
