@@ -13,8 +13,6 @@ import {
 } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 
-// import { getPersonalReasons } from "../modules/propublicaAPIcalls"; <- unavailable as of 1/10/23, see related note on "propublicaAPIcalls.js"
-
 ChartJS.register(
   ArcElement,
   BarElement,
@@ -30,20 +28,6 @@ ChartJS.defaults.font.family = "Merriweather-Regular";
 ChartJS.defaults.font.size = 20;
 
 export default function Graphs(props) {
-  // grab "personal explanations" from propublicaAPI
-  // const [personalReasons, setPersonalReasons] = React.useState([]);
-
-  // React.useEffect(
-  //   () =>
-  //     async function () {
-  //       // proPublicaAPI function from module performs call twice to gather information from both chambers
-  //       const topPersonalReasons = await getPersonalReasons(props.id);
-  //       setPersonalReasons(topPersonalReasons);
-  //     },
-  //   []
-  // );
-  //as of 1/10/23, unable to get data for personalReasons; see related note on "propublicaAPIcalls.js"
-
   //chart and dataset options/styles
   const chartColors = {
     red: "rgb(232, 72, 85)",
