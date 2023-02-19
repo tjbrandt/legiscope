@@ -32,12 +32,12 @@ export default function Graphs(props) {
   const chartColors = {
     red: "rgb(232, 72, 85)",
     blue: "rgb(4, 139, 168)",
-    green: "rgb(171,209,181)",
+    green: "rgb(26, 66, 38)",
     gray: "rgb(212,210,213)",
     black: "rgb(22,16,50)",
   };
 
-  const partvVotesChartOptions = {
+  const chartOptions = {
     plugins: {
       legend: {
         display: false,
@@ -46,25 +46,6 @@ export default function Graphs(props) {
         enabled: false,
       },
     },
-  };
-
-  const voteAttendenceChartOptions = {
-    plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        enabled: false,
-      },
-    },
-  };
-
-  const doughnutDataOptions = {
-    backgroundColor: [chartColors.blue, chartColors.red],
-    borderColor: [chartColors.blue, chartColors.red],
-    borderWidth: 1,
-    circumference: 180,
-    rotation: -90,
   };
 
   //calculate dwNominate scale should go based on: ((input - min) * 100) / (max - min),
@@ -90,17 +71,6 @@ export default function Graphs(props) {
     return dwNominateDisplay;
   }
 
-  const dwChartOptions = {
-    plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        enabled: false,
-      },
-    },
-  };
-
   const dwDataOptions = {
     backgroundColor: [
       determineDwNominateDisplay(dwNominatePercent).color,
@@ -110,6 +80,14 @@ export default function Graphs(props) {
       determineDwNominateDisplay(dwNominatePercent).color,
       chartColors.gray,
     ],
+    borderWidth: 1,
+    circumference: 180,
+    rotation: -90,
+  };
+
+  const doughnutDataOptions = {
+    backgroundColor: [chartColors.blue, chartColors.red],
+    borderColor: [chartColors.blue, chartColors.red],
     borderWidth: 1,
     circumference: 180,
     rotation: -90,
@@ -182,7 +160,7 @@ export default function Graphs(props) {
               {" "}
               <Doughnut
                 data={graphsDisplay.partyVotesDisplay}
-                options={partvVotesChartOptions}
+                options={chartOptions}
                 id="vote-alignment"
               />
             </div>
@@ -190,7 +168,7 @@ export default function Graphs(props) {
               {" "}
               <Doughnut
                 data={graphsDisplay.attendanceDataDisplay}
-                options={voteAttendenceChartOptions}
+                options={chartOptions}
                 id="vote-attendence"
               />{" "}
             </div>
@@ -198,7 +176,7 @@ export default function Graphs(props) {
               {" "}
               <Doughnut
                 data={graphsDisplay.dwNominateDisplay}
-                options={dwChartOptions}
+                options={chartOptions}
                 id="ideology"
               />
             </div>

@@ -55,7 +55,6 @@ async function getMemberData(chamber) {
         youtubeAccount: youtube_account,
         websiteURL: url,
         contactFormURL: contact_form,
-
         phoneNumber: phone,
       },
 

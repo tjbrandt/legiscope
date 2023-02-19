@@ -21,7 +21,7 @@ export default function PaginatedTable(props) {
     return tableRange;
   };
 
-  //separate list into currentGroup
+  //slice list to the group of items on the current page
 
   const divideList = (list, page, rowsPerPage) => {
     return list.slice((page - 1) * rowsPerPage, page * rowsPerPage);
@@ -41,7 +41,7 @@ export default function PaginatedTable(props) {
     }
   }
 
-  //make table and export
+  //ist from props is sliced to only the items that need currently displayed
 
   React.useEffect(() => {
     const range = calculateNumberPages(list, rowsPerPage);
@@ -50,6 +50,8 @@ export default function PaginatedTable(props) {
     const slice = divideList(list, currentPage, rowsPerPage);
     setCurrentGroup([...slice]);
   }, [list, setTableRange, currentPage, setCurrentGroup]);
+
+  //make table for current group (based on the sliced elements from previous useEffect())
 
   function makeTable(list) {
     const memberGroup = list.map((profile) => {
@@ -128,7 +130,7 @@ export default function PaginatedTable(props) {
         <PaginationButtons
           range={tableRange}
           slice={currentGroup}
-          setPage={setCurrentPage}
+          setCurrentPage={setCurrentPage}
           increasePage={currentPageIncrease}
           decreasePage={currentPageDecrease}
           page={currentPage}

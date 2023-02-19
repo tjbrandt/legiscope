@@ -32,7 +32,6 @@ function App() {
   const [error, setError] = React.useState(false);
 
   //API call to get congress person data from ProPublica
-
   React.useEffect(
     () =>
       async function () {
@@ -52,34 +51,6 @@ function App() {
     []
   );
 
-  //update graphs area to show data and image based on the member clicked in list
-  const changeGraphs = (memberID) => {
-    const foundItem = currentList.find(
-      (profile) => profile.personalDetails.id === memberID
-    );
-    const { statistics } = foundItem;
-    const { personalDetails } = foundItem;
-    const newGraphData = {
-      party: personalDetails.party,
-      dwNominate: statistics.dwNominate,
-      votesWithPartyPercent: statistics.votesWithPartyPercent,
-      votesAgainstPartyPercent: statistics.votesAgainstPartyPercent,
-      missedVotesPercent: statistics.missedVotesPercent,
-      imageURL: `congressprofiles/${memberID}.jpg`,
-      name: `${personalDetails.firstName} ${personalDetails.lastName}`,
-    };
-    setGraphsData((prevGraphs) => ({ ...prevGraphs, ...newGraphData }));
-    setShowHero((prevHero) => {
-      if (prevHero === true) {
-        prevHero = false;
-      }
-    });
-  };
-
-  function replaceImage(error) {
-    error.target.src = "congressprofiles/Noimgavailable.jpg";
-  }
-
   //switch between Senate and House lists
   function changeCurentList() {
     setCurrentList((prevList) =>
@@ -92,7 +63,6 @@ function App() {
 
   //show table items that match search and filtering by state/territory
   function handleSearch(event) {
-    console.log(event.target.value);
     setSearchValue(event.target.value);
   }
 
@@ -119,6 +89,34 @@ function App() {
   function resetSearchAndFilter() {
     setSearchValue("");
     setFilterValue("");
+  }
+
+  //update graphs area to show data and image based on the member clicked in list
+  const changeGraphs = (memberID) => {
+    const foundItem = currentList.find(
+      (profile) => profile.personalDetails.id === memberID
+    );
+    const { statistics } = foundItem;
+    const { personalDetails } = foundItem;
+    const newGraphData = {
+      party: personalDetails.party,
+      dwNominate: statistics.dwNominate,
+      votesWithPartyPercent: statistics.votesWithPartyPercent,
+      votesAgainstPartyPercent: statistics.votesAgainstPartyPercent,
+      missedVotesPercent: statistics.missedVotesPercent,
+      imageURL: `congressprofiles/${memberID}.jpg`,
+      name: `${personalDetails.firstName} ${personalDetails.lastName}`,
+    };
+    setGraphsData((prevGraphsData) => ({ ...prevGraphsData, ...newGraphData }));
+    setShowHero((prevHero) => {
+      if (prevHero === true) {
+        prevHero = false;
+      }
+    });
+  };
+
+  function replaceImage(error) {
+    error.target.src = "congressprofiles/Noimgavailable.jpg";
   }
 
   return (

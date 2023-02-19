@@ -1,14 +1,15 @@
 import React from "react";
 
 export default function PaginationButtons(props) {
-  const { range, setPage, page, slice, increasePage, decreasePage } = props;
+  const { range, setCurrentPage, page, slice, increasePage, decreasePage } =
+    props;
 
   React.useEffect(() => {
     if (slice.length < 1 && page !== 1) {
       const firstpage = page - 1;
-      setPage(firstpage);
+      setCurrentPage(firstpage);
     }
-  }, [slice, page, setPage, range]);
+  }, [slice, page, setCurrentPage, range]);
 
   function createGroups(array) {
     const itemsPerGroup = 5;
@@ -40,7 +41,7 @@ export default function PaginationButtons(props) {
               ? "button-current-page__active"
               : "button-current-page__inactive"
           }`}
-            onClick={() => setPage(el)}
+            onClick={() => setCurrentPage(el)}
           >
             {el}
           </button>
@@ -61,7 +62,7 @@ export default function PaginationButtons(props) {
         <button
           key={firstGroupPage}
           className="button-current-page__inactive"
-          onClick={() => setPage(firstGroupPage)}
+          onClick={() => setCurrentPage(firstGroupPage)}
         >
           {buttonDisplay(group)}
         </button>
