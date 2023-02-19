@@ -9,18 +9,18 @@ export default function ContactIcons(props) {
 
   return (
     <div className="table__contact-links">
-      <div>
+      <div title="Member's Website">
         {contactProps.websiteURL && (
           <a href={contactProps.websiteURL} target="_blank" rel="noreferrer">
             <img
               src="images/external_link_rounded_square.png"
-              alt="go to congress person website"
+              alt="go to member's website"
             ></img>
           </a>
         )}
       </div>
 
-      <div>
+      <div title="Contact This Member">
         {contactProps.contactFormURL && (
           <a
             href={contactProps.contactFormURL}
@@ -29,17 +29,21 @@ export default function ContactIcons(props) {
           >
             <img
               src="images/email_rounded_square.png"
-              alt="contact this congress person"
+              alt="contact this congress member"
             ></img>
           </a>
         )}
       </div>
-      <div className="table__phone">
+      <div title={`Call This Member at ${contactProps.phoneNumber}`}>
         {contactProps.phoneNumber && (
-          <a href={contactProps.phoneNumber} target="_blank" rel="noreferrer">
+          <a
+            href={`tel:${contactProps.phoneNumber}`}
+            target="_blank"
+            rel="noreferrer"
+          >
             <img
               src="images/smartphone_rounded_square.png"
-              alt="call this congress person"
+              alt="call this congress member"
             ></img>
           </a>
         )}

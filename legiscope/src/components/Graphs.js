@@ -230,8 +230,8 @@ export default function Graphs(props) {
                 Vote Attendence: how often this member participates in votes.
               </li>
               <li>
-                Ideology: an estimate of this member's political leanings based
-                on the dwNominate methodology.
+                Ideology: an estimate of this member's political leaning based
+                on the DW-Nominate methodology.
               </li>
             </ul>
           </div>

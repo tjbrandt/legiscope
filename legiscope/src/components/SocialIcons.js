@@ -19,7 +19,7 @@ export default function SocialIcons(props) {
   return (
     <div>
       <div className="table__social-links">
-        <div className="socials__twitter">
+        <div title="Twitter">
           {socialProps.twitterAccount && (
             <a
               href={socialProps.twitterAccount}
@@ -33,7 +33,7 @@ export default function SocialIcons(props) {
             </a>
           )}
         </div>
-        <div className="socials_facebook">
+        <div title="Facebook">
           {socialProps.facebookAccount && (
             <a
               href={socialProps.facebookAccount}
@@ -47,7 +47,7 @@ export default function SocialIcons(props) {
             </a>
           )}
         </div>
-        <div className="socials_youtube">
+        <div title="YouTube">
           {socialProps.youtubeAccount && (
             <a
               href={socialProps.youtubeAccount}
