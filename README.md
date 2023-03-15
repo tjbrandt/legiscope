@@ -1,4 +1,4 @@
-# Welcome to Legiscope!
+# Welcome to LegiScope!
 
 Key Technologies Needed: React | JavaScript | CSS
 
